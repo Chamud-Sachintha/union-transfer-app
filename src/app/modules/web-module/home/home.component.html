@@ -1,0 +1,111 @@
+<ion-header class="fixed-header">
+    <ion-title>
+      <img src="../../../../assets/images/login_logo.png" style="width: 100px;" alt="">
+    </ion-title>
+</ion-header>
+<ion-content [fullscreen]="true" class="ion-padding">
+    <h1>ECN Continental Cup T20 2024</h1>
+    <span>27-05-2024 4.47pm</span>
+    <div style="border: 1px solid gray; margin-bottom: 10px;"></div>
+
+    <iframe style="width: 100%; height: 40%;" [src]="liveStreamUrl" frameborder="0" allowfullscreen></iframe>
+
+    <table class="table table-striped mt-3">
+      <thead>
+        <tr style="background-color: black;">
+          <th scope="col" colspan="4" style="height: 40px;"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td colspan="3">Who will win the match ?</td>
+          <td class="text-center">
+            <button class="btn btn-primary btn-sm" (click)="setOpen(true)">Bet</button>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="3">Who will man of the match ?</td>
+          <td class="text-center">
+            <button class="btn btn-primary btn-sm" (click)="setOpen(true)">Bet</button>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="3">Is there rain ?</td>
+          <td class="text-center">
+            <button class="btn btn-primary btn-sm" (click)="setOpen(true)">Bet</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div>
+      <h5>Upcommmings</h5>
+
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th scope="col">Title</th>
+            <th scope="col">Start Date</th>
+            <th scope="col">Start Time</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>India vs Pakistan</td>
+            <td>2024-05-25</td>
+            <td>4.00pm</td>
+          </tr>
+          <tr>
+            <td>Sri Lanka vs England</td>
+            <td>2024-05-25</td>
+            <td>4.00pm</td>
+          </tr>
+          <tr>
+            <td>Australia vs Newzeeland</td>
+            <td>2024-05-25</td>
+            <td>4.00pm</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <ion-modal [isOpen]="isModalOpen" (willDismiss)="onWillDismiss($event)">
+        <ng-template>
+          <ion-header>
+            <ion-toolbar>
+              <ion-buttons slot="start">
+                <ion-button (click)="cancel()">Cancel</ion-button>
+              </ion-buttons>
+              <!-- <ion-buttons slot="end">
+                <ion-button (click)="confirm()" [strong]="true">Confirm</ion-button>
+              </ion-buttons> -->
+            </ion-toolbar>
+          </ion-header>
+          <ion-content class="ion-padding">
+            <div>
+              <h4>Vedio Title</h4>
+
+              <div class="mt-3">
+                <p>Wich Country is Win ?</p>
+              </div>
+
+              <div class="mt-2">
+                <ion-radio-group value="strawberries">
+                  <ion-radio value="grapes">Grapes</ion-radio>
+                  <ion-radio value="strawberries" class="ms-5">Strawberries</ion-radio>
+                </ion-radio-group>
+              </div>
+
+              <div class="mt-3">
+                <input type="text" class="form-control" name="" id="" placeholder="Enter Betting Amount">
+              </div>
+
+              <div class="mt-3">
+                <button class="btn btn-primary btn-sm" (click)="confirm()">Submit</button>
+              </div>
+            </div>
+          </ion-content>
+        </ng-template>
+      </ion-modal>
+
+</ion-content>
