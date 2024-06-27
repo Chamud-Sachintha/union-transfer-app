@@ -7,6 +7,7 @@ import { IonModal } from '@ionic/angular';
 import { OverlayEventDetail } from '@ionic/core/components';
 import { HomeDataService } from 'src/app/services/home-data/home-data.service';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import { Home } from 'src/app/models/Home/home';
 
 @Component({
   selector: 'app-home',
@@ -31,17 +32,46 @@ export class HomeComponent  implements OnInit {
   name!: string;
   isModalOpen = false;
   liveStreamUrl!: SafeResourceUrl;
+  storedUserName!: any;
+
+  homeDataInfoModel = new Home();
 
   constructor(private router: Router, private homeService: HomeDataService, public sanitizer: DomSanitizer) { }
 
   ngOnInit() {
-    this.liveStreamUrl = this.sanitizer.bypassSecurityTrustResourceUrl('https://player003.vip/embed2.php?id=willow&q=Willow Cricket');
+    this.storedUserName = sessionStorage.getItem("userName");
+
+    if (this.storedUserName == null || this.storedUserName == undefined) {
+      this.router.navigate(['/login']);
+    }
     this.loadHomeData();
   }
 
   loadHomeData() {
-    this.homeService.loadHomeData("bwayne").subscribe((resp: any) => {
-      console.log(resp)
+    this.homeService.loadHomeData(this.storedUserName).subscribe((resp: any) => {
+      if (resp.Flag == 100) {
+        this.homeDataInfoModel.COIN_AMT = resp.Data[0].COIN_AMT;
+        this.homeDataInfoModel.USER_NAME = resp.Data[0].USER_NAME;
+        this.homeDataInfoModel.U_BET_QUIZ = resp.Data[0].U_BET_QUIZ;
+        this.homeDataInfoModel.U_UP_COME = resp.Data[0].U_UP_COME;
+        this.homeDataInfoModel.VIDEO_DATE = resp.Data[0].VIDEO_DATE;
+        this.homeDataInfoModel.VIDEO_ID = resp.Data[0].VIDEO_ID;
+        this.homeDataInfoModel.VIDEO_NAME = resp.Data[0].VIDEO_NAME;
+        this.homeDataInfoModel.VIDEO_TYPE = resp.Data[0].VIDEO_TYPE;
+        this.homeDataInfoModel.VIDEO_URL = resp.Data[0].VIDEO_URL;
+
+        if (this.homeDataInfoModel.VIDEO_TYPE == 'Youtube') {
+          const videoWithPrefix = "https://www.youtube.com/embed/" + this.homeDataInfoModel.VIDEO_URL;
+          this.liveStreamUrl = this.sanitizer.bypassSecurityTrustResourceUrl(videoWithPrefix);
+        } else if (this.homeDataInfoModel.VIDEO_TYPE == "Facebook") {
+          const videoWithPrefix = "https://www.facebook.com/plugins/video.php?href=" + this.homeDataInfoModel.VIDEO_URL;
+          this.liveStreamUrl = this.sanitizer.bypassSecurityTrustResourceUrl(videoWithPrefix);
+        } else {
+          this.liveStreamUrl = this.sanitizer.bypassSecurityTrustResourceUrl(this.homeDataInfoModel.VIDEO_URL);
+        }
+      } else {
+        
+      }
     })
   }
 

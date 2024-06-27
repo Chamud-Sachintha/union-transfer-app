@@ -49,6 +49,7 @@
     "ngx-pinch-zoom": "^2.6.2",
     "ngx-slide-to-confirm": "^1.0.3",
     "ngx-star-rating": "^2.1.0",
+    "ngx-toastr": "^19.0.0",
     "npm": "^10.1.0",
     "rxjs": "~7.8.0",
     "swiper": "^8.4.7",

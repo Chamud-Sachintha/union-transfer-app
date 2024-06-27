@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './home/home.component';
 import { BetSummeryComponent } from './bet-summery/bet-summery.component';
+import { AuthGuard } from 'src/app/guards/auth.guard';
 
 const routes: Routes = [
   {
@@ -9,7 +10,8 @@ const routes: Routes = [
     children: [
       {
         path: '',
-        component: HomeComponent
+        component: HomeComponent,
+        canActivate: [AuthGuard]
       },
     ],
   },
@@ -17,7 +19,7 @@ const routes: Routes = [
   {
     path: 'home',
     redirectTo: '',
-    pathMatch: 'full'
+    pathMatch: 'full',
   },
 
   {

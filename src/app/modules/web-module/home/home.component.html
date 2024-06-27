@@ -4,12 +4,12 @@
     </ion-title>
 </ion-header>
 <ion-content [fullscreen]="true" class="ion-padding">
-    <h1>ECN Continental Cup T20 2024</h1>
-    <span>27-05-2024 4.47pm</span>
+    <h1>{{ this.homeDataInfoModel.VIDEO_NAME }}</h1>
+    <span>{{ this.homeDataInfoModel.VIDEO_DATE }}</span>
     <div style="border: 1px solid gray; margin-bottom: 10px;"></div>
 
-    <iframe style="width: 100%; height: 40%;" [src]="liveStreamUrl" frameborder="0" allowfullscreen></iframe>
-
+    <!-- <iframe style="width: 100%; height: 40%;" [src]="liveStreamUrl" frameborder="0" allowfullscreen></iframe> -->
+    <!-- <iframe width="100%" height="400px" [src]="this.liveStreamUrl" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe> -->
     <table class="table table-striped mt-3">
       <thead>
         <tr style="background-color: black;">
@@ -19,18 +19,6 @@
       <tbody>
         <tr>
           <td colspan="3">Who will win the match ?</td>
-          <td class="text-center">
-            <button class="btn btn-primary btn-sm" (click)="setOpen(true)">Bet</button>
-          </td>
-        </tr>
-        <tr>
-          <td colspan="3">Who will man of the match ?</td>
-          <td class="text-center">
-            <button class="btn btn-primary btn-sm" (click)="setOpen(true)">Bet</button>
-          </td>
-        </tr>
-        <tr>
-          <td colspan="3">Is there rain ?</td>
           <td class="text-center">
             <button class="btn btn-primary btn-sm" (click)="setOpen(true)">Bet</button>
           </td>

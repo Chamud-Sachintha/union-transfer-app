@@ -10,14 +10,18 @@ export class AuthService {
 
   constructor(private http: HttpClient) { }
 
-  authenticateUser(params: any) {
+  authenticateUser(authModel: Auth) {
     const path = environment.appAPI + "/api/Login/checkLogin";
+    return this.http.post(path, authModel);
+  }
 
-    let queryParams = new HttpParams();
-    for (let key in params) {
-      queryParams = queryParams.append(key, params[key]);
+  isClientLoggedIn() {
+    var userName = sessionStorage.getItem("userName");
+
+    if (userName != null) {
+      return true;
+    } else {
+      return false;
     }
-
-    return this.http.get(path, { params: queryParams });
   }
 }

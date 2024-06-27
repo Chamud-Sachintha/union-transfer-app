@@ -5,6 +5,7 @@ import { AlertController, IonicModule, Platform, isPlatform } from '@ionic/angul
 import { CommonModule, Location } from '@angular/common';
 import { Auth } from 'src/app/models/Auth/auth';
 import { AuthService } from 'src/app/services/auth/auth.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-signin',
@@ -112,10 +113,14 @@ export class SigninComponent  implements OnInit {
       this.authModel.U_USERNAME = userName;
       this.authModel.U_PASSWORD = password;
 
-      const params = { U_USERNAME: userName, U_PASSWORD: password };
-
-      this.authService.authenticateUser(params).subscribe((resp: any) => {
-        console.log(resp)
+      this.authService.authenticateUser(this.authModel).subscribe((resp: any) => {
+        if (resp.Flag == 100) {
+          this.presentAlert("Authenticate User", "User Login Successfully.");
+          sessionStorage.setItem("userName", userName);
+          this.router.navigate(['home']);
+        } else {
+          this.presentAlert("Authenticate User", "Incorrect Username or Password");
+        }
       })
     }
   }
