@@ -10,7 +10,7 @@
   <table class="table table-striped">
     <thead>
       <tr>
-        <td colspan="4" style="background-color: black; height: 30px; color: white;">Sri Lanka vs Australia 2025-05-04 4.00pm</td>
+        <td colspan="4" style="background-color: black; height: 30px; color: white;">{{ this.betSummeryInfoModel.U_SUM_VID_NAME }} - {{ this.betSummeryInfoModel.U_SUM_VID_DATE | date }}</td>
       </tr>
       <tr>
         <th scope="col">Question</th>
@@ -20,23 +20,11 @@
       </tr>
     </thead>
     <tbody>
-      <tr>
-        <td>Which Country is Win ?</td>
-        <td>Sri Lanka</td>
-        <td>50</td>
-        <td>Pending</td>
-      </tr>
-      <tr>
-        <td>Who will be best bowler ?</td>
-        <td>Vaas</td>
-        <td>50</td>
-        <td>Pending</td>
-      </tr>
-      <tr>
-        <td>Who will be best batsmen ?</td>
-        <td>Sanath</td>
-        <td>50</td>
-        <td>Pending</td>
+      <tr *ngFor="let eachData of this.betSummeryInfoModel.U_SUM_QUIZ">
+        <td>{{ eachData.U_Q_NAME }}</td>
+        <td>{{ eachData.U_Q_ANSWER }}</td>
+        <td>{{ eachData.U_Q_BET_AMT }}</td>
+        <td>{{ eachData.U_Q_BET_STATUS }}</td>
       </tr>
     </tbody>
   </table>

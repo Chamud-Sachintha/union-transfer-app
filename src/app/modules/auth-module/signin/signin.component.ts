@@ -46,10 +46,12 @@ export class SigninComponent  implements OnInit {
 
     const getTabBar = document.getElementById("testYYU");
 
-    console.log(getTabBar)
-
     if (getTabBar != null) {
       getTabBar.style.display = "none";
+    }
+
+    if (sessionStorage.getItem("userName")) {
+      this.router.navigate(['/home']);
     }
   }
 
