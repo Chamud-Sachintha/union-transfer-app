@@ -1,19 +1,22 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import { IonicModule } from '@ionic/angular';
+import { AlertController, IonicModule } from '@ionic/angular';
 import { SwiperComponent, SwiperModule } from 'swiper/angular';
-import {  SlideToConfirmModule } from 'ngx-slide-to-confirm';
 import { IonModal } from '@ionic/angular';
 import { OverlayEventDetail } from '@ionic/core/components';
 import { HomeDataService } from 'src/app/services/home-data/home-data.service';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { Home } from 'src/app/models/Home/home';
+import { CommonModule } from '@angular/common';
+import { BetQuiz } from 'src/app/models/BetQuiz/bet-quiz';
+import { UserBetAnswer } from 'src/app/models/UserBetAnswer/user-bet-answer';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
-  imports: [IonicModule, SwiperModule, SlideToConfirmModule],
+  imports: [IonicModule, SwiperModule, CommonModule, FormsModule],
   standalone: true
 })
 export class HomeComponent  implements OnInit {
@@ -35,14 +38,22 @@ export class HomeComponent  implements OnInit {
   storedUserName!: any;
 
   homeDataInfoModel = new Home();
+  quizModel = new BetQuiz();
+  userQuizAnswer = new UserBetAnswer();
+  selectedAnswer!: string;
+  userBettingAmount!: string;
 
-  constructor(private router: Router, private homeService: HomeDataService, public sanitizer: DomSanitizer) { }
+  constructor(private router: Router, private homeService: HomeDataService, public sanitizer: DomSanitizer, private alertController: AlertController) { }
 
   ngOnInit() {
     this.storedUserName = sessionStorage.getItem("userName");
 
+    const iframe: any = document.querySelector('iframe');
+
     if (this.storedUserName == null || this.storedUserName == undefined) {
       this.router.navigate(['/login']);
+    } else {
+      this.router.navigate(['/home'])
     }
     this.loadHomeData();
   }
@@ -79,7 +90,10 @@ export class HomeComponent  implements OnInit {
     @qId - need to pass to the function to get info about question
   */
 
-  setOpen(isOpen: boolean) {
+  openQuizModel(betQuiz: BetQuiz, isOpen: boolean) {
+    this.quizModel.U_QUIZ_ID = betQuiz.U_QUIZ_ID;
+    this.quizModel.U_QUIZ_NAME = betQuiz.U_QUIZ_NAME;
+    this.quizModel.U_QUIZ_ANSWERS = betQuiz.U_QUIZ_ANSWERS;
     this.isModalOpen = isOpen;
   }
 
@@ -88,8 +102,33 @@ export class HomeComponent  implements OnInit {
     this.isModalOpen = false;
   }
 
+  async presentAlert(subHeader: string, alertMessage: string) {
+    const alert = await this.alertController.create({
+      header: 'Alert',
+      subHeader: subHeader,
+      message: alertMessage,
+      buttons: ['OK'],
+    });
+
+    await alert.present();
+  }
+
   confirm() {
     this.modal.dismiss(this.name, 'confirm');
+    
+    this.userQuizAnswer.U_QUIZ_ID = this.quizModel.U_QUIZ_ID;
+    this.userQuizAnswer.U_QUIZ_ANSWR = this.selectedAnswer;
+    this.userQuizAnswer.U_BET_AMT = this.userBettingAmount;
+    this.userQuizAnswer.U_USER = this.storedUserName;
+
+    this.homeService.submitQuiz(this.userQuizAnswer).subscribe((resp: any) => {
+      if (resp.Flag === 100) {
+        this.presentAlert("Submit Bet Answer", "Answer Submitting Successfully.");
+      } else {
+        this.presentAlert("Submit Bet Answer", resp.ErrorMessage);
+      }
+    })
+
     this.isModalOpen = false;
   }
 

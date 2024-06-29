@@ -1,4 +1,4 @@
-package lk.dpuremaths.app;
+package com.uniontf.app;
 
 import com.getcapacitor.BridgeActivity;
 

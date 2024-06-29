@@ -1,7 +1,7 @@
 import { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
-  appId: 'lk.dpuremaths.app',
+  appId: 'com.uniontf.app',
   appName: 'book-store-app',
   webDir: 'www',
   server: {
