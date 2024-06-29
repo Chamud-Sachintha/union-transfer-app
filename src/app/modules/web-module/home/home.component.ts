@@ -58,6 +58,11 @@ export class HomeComponent  implements OnInit {
     this.loadHomeData();
   }
 
+  goToBetHistory() {
+    this.router.navigate(['/home/bet-summery'])
+    return false;
+  }
+
   loadHomeData() {
     this.homeService.loadHomeData(this.storedUserName).subscribe((resp: any) => {
       if (resp.Flag == 100) {
