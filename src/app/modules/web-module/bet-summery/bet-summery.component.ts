@@ -1,5 +1,6 @@
 import { CommonModule, DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 import { BetSummery } from 'src/app/models/BetSummery/bet-summery';
 import { BetSummeryService } from 'src/app/services/bet-summery/bet-summery.service';
@@ -18,7 +19,7 @@ export class BetSummeryComponent  implements OnInit {
   storedUsername!: any;
   filterDate!: any;
 
-  constructor(private betSummeryService: BetSummeryService, private datePipe: DatePipe) { }
+  constructor(private betSummeryService: BetSummeryService, private datePipe: DatePipe, private router: Router) { }
 
   ngOnInit() {
     this.storedUsername = sessionStorage.getItem("userName");
@@ -35,6 +36,10 @@ export class BetSummeryComponent  implements OnInit {
         this.betSummeryInfoModel.U_SUM_VID_DATE = resp.Data[0].U_SUM_VID_DATE;
       }
     })
+  }
+
+  goToHome() {
+    this.router.navigate(['/home'])
   }
 
 }
