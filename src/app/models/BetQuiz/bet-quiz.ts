@@ -6,4 +6,5 @@ export class BetQuiz {
     U_QUIZ_DATE!: string;
     U_QUIZ_ANSWER_COUNT!: string;
     U_QUIZ_ANSWERS: BetQuizAnswers[] = [];
+    U_QUIZ_STATUS!: string;
 }

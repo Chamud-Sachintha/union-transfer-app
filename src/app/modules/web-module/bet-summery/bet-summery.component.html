@@ -7,7 +7,14 @@
   <div>
     <h5>Bet Summery</h5>
   </div>
-  <table class="table table-striped">
+  <div class="row">
+    <div class="col-12 container">
+      <ion-item>
+        <ion-datetime presentation="date" [showDefaultButtons]="true" #selectedDate (click)="selectDate(selectedDate.value)"></ion-datetime>
+      </ion-item>
+    </div>
+  </div>
+  <table class="table table-striped mt-3">
     <thead>
       <tr>
         <td colspan="4" style="background-color: black; height: 30px; color: white;">{{ this.betSummeryInfoModel.U_SUM_VID_NAME }} - {{ this.betSummeryInfoModel.U_SUM_VID_DATE | date }}</td>

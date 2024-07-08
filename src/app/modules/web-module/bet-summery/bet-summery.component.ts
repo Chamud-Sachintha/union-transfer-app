@@ -18,6 +18,7 @@ export class BetSummeryComponent  implements OnInit {
   betSummeryInfoModel = new BetSummery();
   storedUsername!: any;
   filterDate!: any;
+  selectedDate!: Date;
 
   constructor(private betSummeryService: BetSummeryService, private datePipe: DatePipe, private router: Router) { }
 
@@ -25,11 +26,16 @@ export class BetSummeryComponent  implements OnInit {
     this.storedUsername = sessionStorage.getItem("userName");
     this.filterDate = this.datePipe.transform((new Date()), 'yyyy-MM-dd');
 
-    this.loadBetSummeryDetails();
+    this.loadBetSummeryDetails(this.storedUsername, this.filterDate);
   }
 
-  loadBetSummeryDetails() {
-    this.betSummeryService.getBetSummeryList(this.storedUsername, this.filterDate).subscribe((resp: any) => {
+  selectDate(selectedDate: any) {
+    this.loadBetSummeryDetails(this.storedUsername, this.datePipe.transform(selectedDate, 'yyyy-MM-dd'))
+  }
+
+  loadBetSummeryDetails(storedUserName: any, date: any) {
+    this.betSummeryInfoModel = new BetSummery();
+    this.betSummeryService.getBetSummeryList(storedUserName, date).subscribe((resp: any) => {
       if (resp.Flag === 100) {
         this.betSummeryInfoModel.U_SUM_QUIZ = resp.Data[0].U_SUM_QUIZ;
         this.betSummeryInfoModel.U_SUM_VID_NAME = resp.Data[0].U_SUM_VID_NAME;
