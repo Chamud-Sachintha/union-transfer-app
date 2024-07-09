@@ -5,15 +5,18 @@
 </ion-header>
 <ion-content [fullscreen]="true" class="ion-padding">
   <div class="row">
-    <div class="col-10">
-      <span style="float: right;">Account Balance:</span>
+    <div class="col-6">
+      <p style="float: right;">Account Balance:</p>
     </div>
     <div class="col-2">
       <p style="float: right;">{{ this.homeDataInfoModel.COIN_AMT }}</p>
     </div>
+    <div class="col-4">
+      <button class="btn btn-primary btn-sm" style="float: right;" (click)="onClickBuyMoreCoinBtn()">Buy More</button>
+    </div>
   </div>
   <h1>{{ this.homeDataInfoModel.VIDEO_NAME }}</h1>
-  <span>{{ this.homeDataInfoModel.VIDEO_DATE }}</span>
+  <span>{{ this.homeDataInfoModel.VIDEO_DATE | date: 'dd/MM/yyyy, h:mm a' }}</span>
   <div style="border: 1px solid gray; margin-bottom: 10px;"></div>
 
   <!-- <iframe style="width: 100%; height: 40%;" [src]="liveStreamUrl" frameborder="0" allowfullscreen></iframe> -->
@@ -30,7 +33,7 @@
       <tr *ngFor="let eachQuiz of this.homeDataInfoModel.U_BET_QUIZ">
         <td colspan="3">{{ eachQuiz.U_QUIZ_NAME }}</td>
         <td class="text-center">
-          <button class="btn btn-primary btn-sm" (click)="openQuizModel(eachQuiz, true)" *ngIf="eachQuiz.U_QUIZ_STATUS">Bet</button>
+          <button class="btn btn-primary btn-sm" (click)="openQuizModel(eachQuiz, true)" [disabled]="eachQuiz.U_QUIZ_STATUS != '1'">Bet</button>
         </td>
       </tr>
     </tbody>
@@ -56,9 +59,9 @@
       </thead>
       <tbody>
         <tr *ngFor="let eachUpcomming of this.homeDataInfoModel.U_UP_COME">
-          <td>India vs Pakistan</td>
-          <td>2024-05-25</td>
-          <td>4.00pm</td>
+          <td>{{ eachUpcomming.U_UP_COME_TITLE }}</td>
+          <td>{{ eachUpcomming.U_UP_COME_DATE | date }}</td>
+          <td>{{ eachUpcomming.U_UP_COME_TIME }}</td>
         </tr>
       </tbody>
     </table>

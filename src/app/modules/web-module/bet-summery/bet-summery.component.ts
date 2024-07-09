@@ -1,5 +1,6 @@
 import { CommonModule, DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 import { BetSummery } from 'src/app/models/BetSummery/bet-summery';
@@ -10,7 +11,7 @@ import { BetSummeryService } from 'src/app/services/bet-summery/bet-summery.serv
   templateUrl: './bet-summery.component.html',
   styleUrls: ['./bet-summery.component.scss'],
   standalone: true,
-  imports: [IonicModule, CommonModule],
+  imports: [IonicModule, CommonModule, FormsModule],
   providers: [DatePipe]
 })
 export class BetSummeryComponent  implements OnInit {
@@ -18,7 +19,7 @@ export class BetSummeryComponent  implements OnInit {
   betSummeryInfoModel = new BetSummery();
   storedUsername!: any;
   filterDate!: any;
-  selectedDate!: Date;
+  selectedDate!: any;
 
   constructor(private betSummeryService: BetSummeryService, private datePipe: DatePipe, private router: Router) { }
 
@@ -29,8 +30,8 @@ export class BetSummeryComponent  implements OnInit {
     this.loadBetSummeryDetails(this.storedUsername, this.filterDate);
   }
 
-  selectDate(selectedDate: any) {
-    this.loadBetSummeryDetails(this.storedUsername, this.datePipe.transform(selectedDate, 'yyyy-MM-dd'))
+  selectDate() {
+    this.loadBetSummeryDetails(this.storedUsername, this.datePipe.transform(this.selectedDate, 'yyyy-MM-dd'))
   }
 
   loadBetSummeryDetails(storedUserName: any, date: any) {

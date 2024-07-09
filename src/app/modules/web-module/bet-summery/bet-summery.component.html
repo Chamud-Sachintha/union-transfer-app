@@ -9,8 +9,26 @@
   </div>
   <div class="row">
     <div class="col-12 container">
-      <ion-item>
+      <!-- <ion-item>
         <ion-datetime presentation="date" [showDefaultButtons]="true" #selectedDate (click)="selectDate(selectedDate.value)"></ion-datetime>
+      </ion-item> -->
+      <ion-item>
+        <ion-label style="width: 70px;">Pick date</ion-label>
+        <ion-input
+          value="{{ selectedDate | date: 'dd.MM.yyyy' }}"
+          id="date"
+          class="ion-text-end"
+        ></ion-input>
+        <ion-popover trigger="date" size="cover">
+          <ng-template>
+            <ion-datetime
+              presentation="date"
+              [(ngModel)]="selectedDate"
+              locale="sl-SI"
+              (click)="selectDate()"
+            ></ion-datetime>
+          </ng-template>
+        </ion-popover>
       </ion-item>
     </div>
   </div>

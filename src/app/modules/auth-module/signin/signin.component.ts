@@ -55,6 +55,12 @@ export class SigninComponent  implements OnInit {
     }
   }
 
+  onClickCreateAccount($event: any) {
+    $event.preventDefault()
+    window.open('https://union-transfer.co.uk/Home/Signup', '_blank');
+    // await Browser.open({ url: 'https://union-transfer.co.uk/Home/Signup' });
+  }
+
   onClickViewPassword() {
     const eyeOnIcon = document.getElementById("eyeOn");
     const eyeOffIcon = document.getElementById("eyeOff");

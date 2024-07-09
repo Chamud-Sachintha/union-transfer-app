@@ -63,6 +63,11 @@ export class HomeComponent  implements OnInit {
     return false;
   }
 
+  onClickBuyMoreCoinBtn() {
+    // await Browser.open({ url: 'https://union-transfer.co.uk/Home/Login' });
+    window.open('https://union-transfer.co.uk/Home/Login', '_blank');
+  }
+
   loadHomeData() {
     this.homeService.loadHomeData(this.storedUserName).subscribe((resp: any) => {
       if (resp.Flag == 100) {
